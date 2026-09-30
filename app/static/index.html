@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Docker Hello App</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="card">
+    <span class="badge">Docker</span>
+    <h1>Приложение работает в контейнере</h1>
+    <p class="lead">
+      Это простой веб-сервер на стандартной библиотеке Python,
+      запущенный внутри Docker-контейнера.
+    </p>
+
+    <dl class="info" id="info">
+      <div><dt>Контейнер</dt><dd id="hostname">загрузка…</dd></div>
+      <div><dt>Порт</dt><dd id="port">—</dd></div>
+      <div><dt>Версия</dt><dd id="version">—</dd></div>
+      <div><dt>Python</dt><dd id="python">—</dd></div>
+      <div><dt>Время работы</dt><dd id="uptime">—</dd></div>
+      <div><dt>Запросов обработано</dt><dd id="requests">—</dd></div>
+    </dl>
+
+    <p class="hint">
+      Обновите страницу — счётчик запросов увеличится.
+    </p>
+  </main>
+
+  <script>
+    async function refresh() {
+      try {
+        const data = await (await fetch('/api/info')).json();
+        document.getElementById('hostname').textContent = data.hostname;
+        document.getElementById('port').textContent = data.port;
+        document.getElementById('version').textContent = data.version;
+        document.getElementById('python').textContent = data.python;
+        document.getElementById('uptime').textContent = data.uptime_seconds + ' с';
+        document.getElementById('requests').textContent = data.requests_served;
+      } catch (e) {
+        document.getElementById('hostname').textContent = 'недоступно';
+      }
+    }
+    refresh();
+    setInterval(refresh, 2000);
+  </script>
+</body>
+</html>

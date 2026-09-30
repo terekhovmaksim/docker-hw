@@ -1,0 +1,10 @@
+.git
+.gitignore
+README.md
+docker-compose.yml
+Dockerfile
+.dockerignore
+**/__pycache__
+**/*.py[cod]
+**/*.log
+.env
